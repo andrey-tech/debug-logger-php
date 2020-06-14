@@ -49,7 +49,7 @@ $ composer require andrey-tech/debug-logger-php
 ### Методы класса
 
 - `static instance(string $logFileName = 'debug.log') :\App\DebugLogger`  
-    Возвращает единственнный объект класса для заданного лог-файла `$logFileName`.
+    Возвращает единственный объект класса для заданного лог-файла `$logFileName`.
     + `$logFileName` - имя лог-файла.
 - `save(mixed $info, $object = null) :void` Сохраняет подлежащую логированию информацию в файл.
     + $info - строка, массив или объект для логирования;
