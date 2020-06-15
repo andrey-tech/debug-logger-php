@@ -1,7 +1,7 @@
 {
     "name": "andrey-tech/debug-logger-php",
     "description": "Простой логгер, cохраняющий отладочную информацию в файл",
-    "keywords": [ "logger", "debug" ],
+    "keywords": [ "logger", "debug", "debugging-tool" ],
     "homepage": "https://github.com/andrey-tech/debug-logger-php",
     "minimum-stability": "stable",
     "license": "MIT",
