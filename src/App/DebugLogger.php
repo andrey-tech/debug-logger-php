@@ -8,7 +8,7 @@
  * @see https://github.com/andrey-tech/debug-logger-php
  * @license   MIT
  *
- * @version 1.8.0
+ * @version 1.9.0
  *
  * v1.0.0 (23.08.2019) Начальный релиз
  * v1.1.0 (30.08.2019) Добавлен флаг isActive
@@ -25,6 +25,7 @@
  * v1.6.0 (13.05.2020) Изменен момент создания каталога для лог файлов
  * v1.7.0 (14.05.2020) Добавлен уникальный ID
  * v1.8.0 (10.06.2020) Удален параметр $header из метода save(). Рефракторинг
+ * v1.9.0 (13.07.2020) Добавлен необязательный заголовок для отладочной информации
  *
  */
 
@@ -102,10 +103,11 @@ class DebugLogger
     /**
      * Сохраняет отладочную информацию в файл
      * @param mixed $info Отладочная информация (строка, массив, объект)
-     * @param object $object Объект класса в котором вызывается метод
+     * @param ?object $object Объект класса в котором вызывается метод
+     * @param ?string $header Заголовок для отладочной информации
      * @return void
      */
-    public function save($info, $object = null)
+    public function save($info, $object = null, string $header = null)
     {
         // Если не активен (выключен)
         if (! $this->isActive) {
@@ -137,10 +139,15 @@ class DebugLogger
         // Заголовок сообщения для лог файла
         $message = "*** {$this->uniqId} [{$requestTime}, {$memoryUsage}] " . str_repeat('*', 20) . PHP_EOL;
 
-        // Формируем заголовок
-        if (isset($object) && is_object($object)) {
+        // Добавляем название класса объекта
+        if (! empty($object) && is_object($object)) {
             $className = get_class($object);
-            $message .= "* Class: {$className}\n";
+            $message .= "* Class: {$className}" . PHP_EOL;
+        }
+
+        // Добавляем заголовок
+        if (! empty($header)) {
+            $message .= "* {$header}" . PHP_EOL;
         }
 
         if (! is_string($info)) {
