@@ -25,7 +25,7 @@ interface DebugLoggerInterface
      * @param string $logFileName Имя лог файла
      * @return DebugLogger
      */
-    public static function instance(string $logFileName): DebugLogger;
+    public static function instance(string $logFileName);
 
     /**
      * Сохраняет отладочную информацию в файл
