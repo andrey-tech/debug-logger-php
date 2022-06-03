@@ -4,13 +4,14 @@
  * Интерфейс логгера, сохраняющего отладочную информацию в файл
  *
  * @author    andrey-tech
- * @copyright 2021 andrey-tech
+ * @copyright 2021-2022 andrey-tech
  * @see https://github.com/andrey-tech/debug-logger-php
  * @license   MIT
  *
- * @version 2.0.0
+ * @version 1.0.1
  *
  * v1.0.0 (06.02.2021) Начальный релиз
+ * v1.0.1 (03.06.2022) Исправлена сигнатура метода instance()
  *
  */
 
@@ -21,9 +22,8 @@ namespace App\DebugLogger;
 interface DebugLoggerInterface
 {
     /**
-     * Возвращает единственный объект класса \App\DebugLogger\DebugLogger для заданного лог файла
+     * Возвращает единственный объект класса логгера для заданного лог файла
      * @param string $logFileName Имя лог файла
-     * @return DebugLogger
      */
     public static function instance(string $logFileName);
 
