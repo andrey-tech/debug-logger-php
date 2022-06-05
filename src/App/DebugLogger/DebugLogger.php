@@ -4,11 +4,11 @@
  * Простой логгер, сохраняющий отладочную информацию в файл
  *
  * @author    andrey-tech
- * @copyright 2019-2021 andrey-tech
+ * @copyright 2019-2022 andrey-tech
  * @see https://github.com/andrey-tech/debug-logger-php
  * @license   MIT
  *
- * @version 2.0.0
+ * @version 2.0.1
  *
  * v1.0.0 (23.08.2019) Начальный релиз
  * v1.1.0 (30.08.2019) Добавлен флаг isActive
@@ -27,6 +27,7 @@
  * v1.8.0 (10.06.2020) Удален параметр $header из метода save(). Рефакторинг
  * v1.9.0 (13.07.2020) Добавлен необязательный заголовок для отладочной информации
  * v2.0.0 (06.02.2021) Изменение пространства имен на \App\DebugLogger
+ * v2.0.1 (05.06.2022) Рефакторинг
  *
  */
 
@@ -108,7 +109,7 @@ class DebugLogger implements DebugLoggerInterface
      * @param string $logFileName Имя лог файла
      * @return DebugLogger
      */
-    public static function instance(string $logFileName = 'debug.log'): DebugLogger
+    public static function instance(string $logFileName = 'debug.log'): DebugLoggerInterface
     {
         if (! isset(self::$instances[ $logFileName ])) {
             self::$instances[ $logFileName ] = new self($logFileName);
@@ -122,6 +123,7 @@ class DebugLogger implements DebugLoggerInterface
      * @param ?object $object Объект класса в котором вызывается метод
      * @param ?string $header Заголовок отладочной информации
      * @return void
+     * @throws DebugLoggerException
      */
     public function save($info, $object = null, string $header = null)
     {
@@ -145,7 +147,6 @@ class DebugLogger implements DebugLoggerInterface
         $this->microtime = $microtime;
 
         // Форматирует время запроса
-        /** @noinspection PrintfScanfArgumentsInspection */
         $dateTime = DateTime::createFromFormat('U.u', sprintf('%.f', $microtime));
         $timeZone = new DateTimeZone(date_default_timezone_get());
         $dateTime->setTimeZone($timeZone);
@@ -189,6 +190,7 @@ class DebugLogger implements DebugLoggerInterface
      * @param string $relativeFileName Относительное имя файла
      * @param bool $createDir Создавать каталоги при необходимости?
      * @return string|null Абсолютное имя файла
+     * @throws DebugLoggerException
      * @see http://php.net/manual/ru/function.stream-resolve-include-path.php#115229
      */
     private function getAbsoluteFileName(string $relativeFileName, bool $createDir = true)
@@ -201,7 +203,7 @@ class DebugLogger implements DebugLoggerInterface
                 return $absoluteFileName;
             }
             if ($createDir) {
-                if (!mkdir($checkDir, self::$mkdirMode, $recursive = true) && !is_dir($checkDir)) {
+                if (!mkdir($checkDir, self::$mkdirMode, true) && !is_dir($checkDir)) {
                     throw new DebugLoggerException("Не удалось создать каталог для лог файлов '{$checkDir}'");
                 }
                 return $absoluteFileName;

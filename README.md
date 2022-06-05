@@ -55,10 +55,10 @@ $ composer require andrey-tech/debug-logger-php:"^2.0"
 <a id="%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D1%8B-%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B0"></a>
 ### Методы класса
 
-- `static instance(string $logFileName = 'debug.log') :self`  
-    Возвращает единственный объект данного класса **для заданного лог-файла** `$logFileName`.
+- `static instance(string $logFileName = 'debug.log'): DebugLogger`  
+    Возвращает единственный объект класса `DebugLogger` **для заданного лог-файла** `$logFileName`.
     + `$logFileName` - имя лог-файла.
-- `save(mixed $info, object $object = null, string $header = null) :void` Сохраняет подлежащую логированию информацию в файл.
+- `save(mixed $info, object $object = null, string $header = null): void` Сохраняет подлежащую логированию информацию в файл.
     + `$info` - строка, массив или объект для логирования;
     + `$object` - ссылка на объект класса в котором выполняется логирование;
     + `$header` - строка заголовка для сохраняемой в лог файл информации.
